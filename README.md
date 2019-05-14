@@ -149,7 +149,7 @@ Cancel return data
 "result": 0
 ~~~
 
-#### <a name='Sign'></a>Sign (only version 0.6.5 or higher support this api)
+#### <a name='Sign'></a>签名(Sign) (only version 0.6.5 or higher support this api)
 - Parameters
 ~~~
     protocol    string  //protocol name here is TokenPocket
