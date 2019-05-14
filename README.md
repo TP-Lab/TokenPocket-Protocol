@@ -17,7 +17,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 <a href='tpoutside://pull.activity?param={"Protocol":"TokenPocket","version":"v1.0","blockchain":"eos","from":"aaaaaa123451","to":"cbzfb4a5s5zv","amount":"0.0001","contract":"eosio.token","symbol":"EOS","precision":"4","action":"transfer","memo":"test transfer from page"}'>Open TokenPocket to transfer eos</a><br/>
 ~~~
 
-#### 独立App拉起 Call from app
+#### 独立App拉起 ( Call from app )
 - [App 拉起钱包操作( Call from app )](https://github.com/TP-Lab/Mobile-SDK)
 ****
 
