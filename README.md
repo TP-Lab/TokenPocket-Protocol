@@ -11,6 +11,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 #### 扫码拉起TokenPocket （Scan qrcode call TokenPocket）
 
 #### 页面拉起 ( Call from web page )
+- Scheme：tpoutside://pull.activity?param={}
 ~~~
 转账示例，其他操作类似(Token transfer demo)
 
@@ -19,6 +20,12 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 
 #### 独立App拉起 ( Call from app )
 - [App 拉起钱包操作( Call from app )](https://github.com/TP-Lab/Mobile-SDK)
+
+#### Dapp 浏览器打开url ( Call TokenPocket to open url with Dapp browser)
+- Scheme:tpdapp://open?params={}
+~~~
+<a href='tpdapp://open?params={"url": "https://dapp.mytokenpocket.vip/referendum/index.html#/", "chain": "EOS", "source":"xxx"}'>Open url with TokenPocket</a>
+~~~
 ****
 
 ### 操作（actions）
@@ -26,6 +33,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 - [2 转账 （Token transfer）](#Transfer)
 - [3 PushTransaction](#PushTransaction)
 - [4 签名（Sign）](#Sign)
+- [5 Dapp 浏览器打开url （Dapp browser open url）](#DappBrowser)
 
 
 #### <a name='Login'></a> Login
@@ -180,4 +188,12 @@ Cancel return data
 "action":"sign",
 "actionId":"ljsdljf-xljlsdjfl"
 "result": 0
+~~~
+
+#### <a name='DappBrowser'></a>Dapp 浏览器打开url (Dapp browser open url)
+- Parameters
+~~~
+"url": "https://dapp.mytokenpocket.vip/referendum/index.html#/",
+"chain": "EOS", 
+"source":"xxx"
 ~~~
