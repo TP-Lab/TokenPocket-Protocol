@@ -11,7 +11,6 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 #### 扫码拉起TokenPocket （Scan qrcode call TokenPocket）
 
 #### 页面拉起 ( Call from web page )
-- 网页拉起钱包操作( Call from web page )
 ~~~
 转账示例，其他操作类似(Token transfer demo)
 
