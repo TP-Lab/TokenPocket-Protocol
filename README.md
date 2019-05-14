@@ -29,7 +29,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 - [4 签名（Sign）](#Sign)
 
 
-### <a name='Login'></a> Login
+#### <a name='Login'></a> Login
 
 - Parameters
 ~~~
@@ -73,7 +73,7 @@ Cancel return data
 ~~~
 
 
-### <a name='Transfer'></a>转账（Token transfer）
+#### <a name='Transfer'></a>转账（Token transfer）
 
 - Parameters
 ~~~
@@ -117,7 +117,7 @@ Cancel return data
 ~~~
 
 
-### <a name='PushTransaction'></a>PushTransaction
+#### <a name='PushTransaction'></a>PushTransaction
 - Parameters
 ~~~
     protocol    string  //protocol name here is TokenPocket
@@ -150,7 +150,7 @@ Cancel return data
 "result": 0
 ~~~
 
-### <a name='Sign'></a>Sign (only version 0.6.5 or higher support this api)
+#### <a name='Sign'></a>Sign (only version 0.6.5 or higher support this api)
 - Parameters
 ~~~
     protocol    string  //protocol name here is TokenPocket
