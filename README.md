@@ -2,7 +2,7 @@
 
 #### Version：v1.0
 
-该协议可以用户从网页和第三方App拉起TokenPocket钱包做授权 转账等操作
+该协议可以用于从网页和第三方App拉起TokenPocket钱包做授权 转账等操作
 
 This protocol can be used to call TokenPocket do some actions from page or app。
 ****
