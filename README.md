@@ -19,7 +19,10 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 ~~~
 
 #### 独立App拉起 ( Call from app )
-- [App 拉起钱包操作( Call from app )](https://github.com/TP-Lab/Mobile-SDK)
+第三方App可以拉起TokenPocket执行签名，转账等操作。TP sdk还支持内嵌钱包，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅，具体使用请参照：[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
+
+Third-party apps can execute signatures, transfers, and etc actions by pull up the TokenPocket. TP SDK also supports built-in wallets that can execute specific actions without leaving the app, which provides a better user experience. Please check it for the details:[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
+
 
 #### Dapp 浏览器打开url ( Call TokenPocket to open url with Dapp browser)
 - Scheme:tpdapp://open?params={}
@@ -28,12 +31,22 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 ~~~
 ****
 
-### 操作（actions）
+### 通用操作（common actions）
 - [1 授权登陆 （Login）](#Login)
 - [2 转账 （Token transfer）](#Transfer)
 - [3 PushTransaction](#PushTransaction)
 - [4 签名（Sign）](#Sign)
 - [5 Dapp 浏览器打开url （Dapp browser open url）](#DappBrowser)
+### 内置钱包操作
+- [1 初始化SDK（init sdk）](#initSDK)
+- [2 设置节点信息（set blockchain info）](#setBlockChain)
+- [3 设置插件信息（set pulugin info）](#Auth)
+- [4 设置加密seed（set seed to protect data）](#setSeed)
+- [5 修改加密seed（modify seed）](#modifySeed)
+- [6 获取已授权账号信息（get authed accounts）](#getAccounts)
+- [7 检查权限是否存在（check permission bind to account）](#isPermExist)
+- [8 检查权限是否link到action（check action bind to permission）](#isPermLinkAction)
+- [9 清除本地授权（clearAuth）](#clearAuth)
 
 
 #### <a name='Login'></a> Login
@@ -41,7 +54,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 - Parameters
 ~~~
 {
-    protocol	string   //protocol name here is TokenPocket
+    protocol  string   //protocol name here is TokenPocket
     version     string   // protocol version here is v1.0
     dappName    string   // optional
     dappIcon    string   // optional
@@ -50,8 +63,8 @@ This protocol can be used to call TokenPocket do some actions from page or app�
     action      string   // neccessary here is login
     actionId    string   // optional   
     callbackUrl string   // optional
-    expired	    string   //expire time in seconds
-    memo	    string   // optional
+    expired     string   //expire time in seconds
+    memo      string   // optional
 }
 ~~~
 
@@ -98,8 +111,8 @@ Cancel return data
     contract    string   // neccessary
     symbol      string   // neccessary
     precision   number   // neccessary
-    memo        string   //optional		     
-    expired	    string   // expire time in seconds
+    memo        string   //optional        
+    expired     string   // expire time in seconds
 }
 ~~~
 
@@ -197,3 +210,51 @@ Cancel return data
 "chain": "EOS", 
 "source":"xxx"
 ~~~
+
+#### <a name='initSDK'></a>初始化sdk (Init SDK)
+~~~
+TPManager.initSDK(Context context);
+~~~
+
+#### <a name='setBlockChain'></a>设置blockchain 信息 (Set blockchain info)
+~~~
+TPManager.getInstance().setBlockChain(Context context, NetTypeEnum netType, String nodeUrl);
+~~~
+
+#### <a name='setAppPluginNode'></a>设置插件信息 (Set plugin info)
+~~~
+TPManager.getInstance().setAppPluginNode(Context context, String pluginUrl);
+~~~
+
+#### <a name='setSeed'></a>设置seed (Set seed to protect data)
+~~~
+TPManager.getInstance().setSeed(Context context, String seed)
+~~~
+
+#### <a name='modifySeed'></a>修改seed (Modify seed)
+
+~~~
+TPManager.getInstance().modifySeed(Context context, String oldSeed, String newSeed)；
+~~~
+
+#### <a name='getAccounts'></a>获取已授权账号信息（get authed accounts
+~~~
+TPManager.getInstance().getAccounts(Context context)；
+~~~
+
+#### <a name='isPermExisted'></a>检查权限是否存在（check permission bind to account）
+~~~
+TPManager.getInstance()isPermExisted(Context context, String account, String perm, final TPListener listener);
+~~~
+
+#### <a name='isPermLinkAction'></a>检查权限是否link到action（check action bind to permission)
+~~~
+TPManager.getInstance().isPermiLinkAction(Context context, String account, String perm, List<Permission.LinkAction> actions,
+                                  final TPListener listener);
+~~~
+
+#### <a name='clearAuth'></a>清除本地授权（clearAuth）
+~~~
+TPManager.getInstance().clearAuth(Context context, String account);
+~~~
+
