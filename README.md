@@ -1,260 +1,337 @@
-# TokenPocket Protocol
+# TokenPocket Android SDK
 
-#### Version：v1.0
+该SDK用于拉起TP钱包，实现APP间互相调起，使用TP进行相关action操作。
 
-该协议可以用于从网页和第三方App拉起TokenPocket钱包做授权 转账等操作
+DApp uses this SDK  to pull up the TokenPocket wallet and do some actions such as token transfer, login auth, pushTransaction etc.
 
-This protocol can be used to call TokenPocket do some actions from page or app。
-****
-### 使用场景（How to use）
+- 该SDK仅支持0.4.9以上版本的TP钱包。
+- 0.7.8以及以上的TP钱包版本支持miniwallet。
+- Only version 0.4.9 or higher support this SDK.
+- Only version 0.7.8 or higher support miniwallet apis.
 
-#### 扫码拉起TokenPocket （Scan qrcode call TokenPocket）
+## <a name='Catalog'></a>目录 (Catalog)
 
-#### 页面拉起 ( Call from web page )
-- Scheme：tpoutside://pull.activity?param={}
-~~~
-转账示例，其他操作类似(Token transfer demo)
+<!-- vscode-markdown-toc -->
+* [TP钱包协议文档 (TokenPocket Wallet Protocol)](#TPTokenPocketWalletProtocol)
+* [Demo](#Demo)
+* [开始接入 (Getting Started)](#GettingStarted)
+* [通用操作 (Common apis)](#Commonapis)
+  * [APIs](#APIs)
+    * [1.授权登陆  (Authorize)](#Authorize)
+    * [2.转账 (Token transfer)](#Tokentransfer)
+    * [3.PushTransaction](#PushTransaction)
+    * [4.签名 (Sign)](#Sign)
+* [MiniWallet](#MiniWallet)
+  * [简介 (Introduction)](#Introduction)
+  * [auth](#auth)
+  * [pushTransaction](#pushTransaction)
+  * [miniwallet操作 (miniwallet apis)](#miniwalletminiwalletapis)
+    * [1.初始化SDK (Init sdk)](#SDKInitsdk)
+    * [2.设置blockchain 信息 (Set blockchain info)](#blockchainSetblockchaininfo)
+    * [3.设置插件信息 (Set plugin info)](#Setplugininfo)
+    * [4.设置seed (Set seed to protect data)](#seedSetseedtoprotectdata)
+    * [5.修改seed (Modify seed)](#seedModifyseed)
+    * [6.获取已授权账号信息 (Get authed accounts](#Getauthedaccounts)
+    * [7.检查权限是否存在 (Check permission bind to account)](#Checkpermissionbindtoaccount)
+    * [8.检查权限是否link到action (Check action bind to permission)](#linkactionCheckactionbindtopermission)
+    * [9.清除本地授权 (Clear authed account)](#Clearauthedaccount)
 
-<a href='tpoutside://pull.activity?param={"Protocol":"TokenPocket","version":"v1.0","blockchain":"eos","from":"aaaaaa123451","to":"cbzfb4a5s5zv","amount":"0.0001","contract":"eosio.token","symbol":"EOS","precision":"4","action":"transfer","memo":"test transfer from page"}'>Open TokenPocket to transfer eos</a><br/>
-~~~
-
-#### 独立App拉起 ( Call from app )
-第三方App可以拉起TokenPocket执行签名，转账等操作。TP sdk还支持内嵌钱包，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅，具体使用请参照：[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
-
-Third-party apps can execute signatures, transfers, and etc actions by pull up the TokenPocket. TP SDK also supports built-in wallets that can execute specific actions without leaving the app, which provides a better user experience. Please check it for the details:[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
-
-
-#### Dapp 浏览器打开url ( Call TokenPocket to open url with Dapp browser)
-- Scheme:tpdapp://open?params={}
-~~~
-<a href='tpdapp://open?params={"url": "https://dapp.mytokenpocket.vip/referendum/index.html#/", "chain": "EOS", "source":"xxx"}'>Open url with TokenPocket</a>
-~~~
-****
-
-### 通用操作（common actions）
-- [1 授权登陆 （Login）](#Login)
-- [2 转账 （Token transfer）](#Transfer)
-- [3 PushTransaction](#PushTransaction)
-- [4 签名（Sign）](#Sign)
-- [5 Dapp 浏览器打开url （Dapp browser open url）](#DappBrowser)
-### 内置钱包操作
-- [1 初始化SDK（init sdk）](#initSDK)
-- [2 设置节点信息（set blockchain info）](#setBlockChain)
-- [3 设置插件信息（set pulugin info）](#Auth)
-- [4 设置加密seed（set seed to protect data）](#setSeed)
-- [5 修改加密seed（modify seed）](#modifySeed)
-- [6 获取已授权账号信息（get authed accounts）](#getAccounts)
-- [7 检查权限是否存在（check permission bind to account）](#isPermExist)
-- [8 检查权限是否link到action（check action bind to permission）](#isPermLinkAction)
-- [9 清除本地授权（clearAuth）](#clearAuth)
+<!-- vscode-markdown-toc-config
+  numbering=false
+  autoSave=true
+  /vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
 
 
-#### <a name='Login'></a> Login
 
-- Parameters
-~~~
-{
-    protocol  string   //protocol name here is TokenPocket
-    version     string   // protocol version here is v1.0
-    dappName    string   // optional
-    dappIcon    string   // optional
-    blockchain  string   // wallet type(eos bos eth moac )
-    wallet      string   // account name
-    action      string   // neccessary here is login
-    actionId    string   // optional   
-    callbackUrl string   // optional
-    expired     string   //expire time in seconds
-    memo      string   // optional
+## <a name='TPTokenPocketWalletProtocol'></a>TP钱包协议文档 (TokenPocket Wallet Protocol)
+
+**https://github.com/TP-Lab/tp-wallet-sdk**
+
+
+
+## <a name='Demo'></a>Demo
+
+https://github.com/TP-Lab/Mobile-SDK/tree/master/Android%20SDK/sample
+
+## <a name='GettingStarted'></a>开始接入 (Getting Started)
+
+- Android studio 工程根目录下build.gradle添加以下内容(Add the following lines to your main build.gradle in the root of your project)
+
+```java
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://dl.bintray.com/tokenpocket/Maven' }
+    }
 }
-~~~
+```
 
-- Success return data
-~~~
-{
-   "sign": "SIG_K1_KZL9eR4cCQCJHpYHbh44yGrDqu4w8hHzQwb1xTk4Mcd4czqpw4jJUgg9DnWXzE3r",
-   "timestamp": "1546613919", //in seconds
-   "wallet": "eoseoseosacc", //account name
-   "ref": "TokenPocket",
-   "action":"login",
-   "actionId":"ljsdjljdljf-xjlsdjfkj" //actionId from dapp
-   "publickey": "EOS2TtWv19a9eYEQYB8NbGCM28nQNngWP4UcSjVYqtEz6kF7yCnPX",
-   "permissions": ["active", "owner"],
-   "result": 1
+- App下build.gradle添加一下内容(add the following lines to your app/build.gradle)
+
+``` java
+dependencies {
+    implementation 'com.tokenpocket.lab:wallet-sdk:1.0.0'
 }
-~~~
+```
 
-Cancel return data
-~~~
-{
-   "action":"login",
-   "actionId":"ljsdjljdljf-xjlsdjfkj" 
-   "result": 0
-}
-~~~
+- 反混淆(Proguard)
 
-
-#### <a name='Transfer'></a>转账（Token transfer）
-
-- Parameters
-~~~
-{
-    protocol    string   //protocol name here is TokenPocket
-    version     string   // protocol version here is v1.0
-    dappName    string   // optional
-    dappIcon    string   // optional
-    action      string   // neccessary here is transfer
-    actionId    string   // optional
-    blockchain  string   //wallet type(eos bos eth moac )
-    from        string   // optional
-    to          string   // neccessary
-    amount      number   // neccessary
-    contract    string   // neccessary
-    symbol      string   // neccessary
-    precision   number   // neccessary
-    memo        string   //optional        
-    expired     string   // expire time in seconds
-}
-~~~
+``` java
+# tokenpocket sdk
+-dontwarn com.tokenpocket.opensdk.**
+-keep class com.tokenpocket.opensdk.**{*;}
+-keep interface com.tokenpocket.opensdk.**{*;}
+```
 
 
-- Success return data
-~~~
-"ref": "TokenPocket",
-"txID": "588c6797534d09e8e0b149c06c11bfd6ca7b96f0d4bba87700fffe7a87b0d988",
-"publickey": "EOSX1tWv19a9eKEQQB8Nb2wM28nYNngWP3UcSjVYqtjz6kF7yCnQ",
-"action":"transfer",
-"actionId":"ljsdljf-xljlsdjfl" //from dapp
-"wallet": "eoseoseostes",
-"permissions": ["active", "owner"],
-"result": 1
-~~~
-
-- Cancel return data
-~~~
-"action":"transfer",
-"actionId":"ljsdljf-xljlsdjfl" //from dapp
-"result": 0
-~~~
 
 
-#### <a name='PushTransaction'></a>PushTransaction
-- Parameters
-~~~
-    protocol    string  //protocol name here is TokenPocket
-    version     string   // protocol version here is v1.0
-    dappName    string   // optional
-    dappIcon    string   // optional
-    action      string   // neccessary here is pushTransaction
-    actionId    string   // optional 
-    blockchain  string   //wallet type(eos bos eth moac )
-    actions     string   //actions data
-    memo    string       //optional
-~~~
+## <a name='Commonapis'></a>通用操作 (Common apis)
 
-- Success return data
-~~~
-"ref": "TokenPocket",
-"txID": "588c6797534d09e8e0b149c06c11bfd6ca7b96f0d4bba87700fffe7a87b0d988",
-"publickey": "EOSX1tWv19a9eKEQQB8Nb2wM28nYNngWP3UcSjVYqtjz6kF7yCnQ",
-"action":"pushTransaction",
-"actionId":"ljsdljf-xljlsdjfl" 
-"wallet": "eoseoseostes",
-"permissions": ["active", "owner"],
-"result": 1
-~~~
+### <a name='APIs'></a>APIs
 
-- Cancel return data
-~~~
-"action":"pushTransaction",
-"actionId":"ljsdljf-xljlsdjfl"
-"result": 0
-~~~
+#### <a name='Authorize'></a>1.授权登陆  (Authorize)
 
-#### <a name='Sign'></a>签名(Sign) (only version 0.6.5 or higher support this api)
-- Parameters
-~~~
-    protocol    string  //protocol name here is TokenPocket
-    version     string   // protocol version here is v1.0
-    dappName    string   // optional
-    dappIcon    string   // optional
-    action      string   // neccessary here is sign
-    actionId    string   // optional 
-    blockchain  string   //wallet type(eos bos eth moac )
-    message     string   //message to sign
-    memo    string       //optional
-~~~
+``` java
+    Authorize authorize = new Authorize();
+    authorize.setBlockchain("EOS");
+    authorize.setDappName("Newdex");
+    authorize.setDappIcon("https://newdex.io/static/logoicon.png");
+    authorize.setActionId("web-99784c28-70f0-49ff-3654-f27b137b3502");
+    authorize.setCallbackUrl("https://newdex.io/api/account/walletVerify");
+    authorize.setExpired(1537157808L);
+    authorize.setMemo("The first gobal decentralized exchange built on EOS");
+    authorize.setBlockchain("EOS");
+    TPManager.getInstance().authorize(MainActivity.this, getAuthorize(),new TPListener() {
+        @Override
+        public void onSuccess(String data) {
 
-- Success return data
-~~~
-"ref": "TokenPocket",
-"sign": "SIG_K1_JXLSDFLJLSKDJFKJ", //signed data
-"publickey": "EOSX1tWv19a9eKEQQB8Nb2wM28nYNngWP3UcSjVYqtjz6kF7yCnQ",
-"action":"pushTransaction",
-"actionId":"ljsdljf-xljlsdjfl" 
-"wallet": "eoseoseostes",
-"permissions": ["active", "owner"],
-"result": 1
-~~~
+        }
 
-- Cancel return data
-~~~
-"action":"sign",
-"actionId":"ljsdljf-xljlsdjfl"
-"result": 0
-~~~
+        @Override
+        public void onError(String data) {
 
-#### <a name='DappBrowser'></a>Dapp 浏览器打开url (Dapp browser open url)
-- Parameters
-~~~
-"url": "https://dapp.mytokenpocket.vip/referendum/index.html#/",
-"chain": "EOS", 
-"source":"xxx"
-~~~
+        }
 
-#### <a name='initSDK'></a>初始化sdk (Init SDK)
-~~~
+        @Override
+        public void onCancel(String data) {
+
+        }
+});
+```
+
+#### <a name='Tokentransfer'></a>2.转账 (Token transfer)
+
+``` java
+    Transfer transfer = new Transfer();
+    transfer.setBlockchain("EOS");
+    transfer.setDappName("Newdex");
+    transfer.setDappIcon("https://newdex.io/static/logoicon.png");
+    transfer.setFrom("clement11111");
+    transfer.setTo("newdexpocket");
+    transfer.setAmount(0.0001);
+    transfer.setContract("eosio.token");
+    transfer.setSymbol("EOS");
+    transfer.setPrecision(4);
+    transfer.setMemo("test");
+    transfer.setExpired(1535944144L);
+    transfer.setBlockchain("EOS");
+    transfer.setCallbackUrl("https://newdex.io/api/account/transferCallback?uuid=1-46e023fc-015b-4b76-3809-1cab3fd76d2c");
+
+    TPManager.getInstance().transfer(MainActivity.this, transfer,new TPListener() {
+        @Override
+        public void onSuccess(String data) {
+        }
+
+        @Override
+        public void onError(String data) {
+        }
+
+        @Override
+        public void onCancel(String data) {
+        }
+    });
+```
+
+#### <a name='PushTransaction'></a>3.PushTransaction
+
+==如果是IOST底层，将transaction.setActions替换成setPayload,详情请见demo (If is iost, replace setActions with setPalyload, for more details, please check the demo project)==
+
+``` java
+    Transaction transaction = new Transaction();
+    transaction.setBlockchain("EOS");
+    transaction.setDappName("Test Name");
+    transaction.setDappIcon("https://newdex.io/static/logoicon.png");
+    transaction.setActions("[{\n" +
+            "\"account\": \"eosio.token\",\n" +
+            "\"name\": \"transfer\",\n" +
+            "\"authorization\": [{\n" +
+            "\"actor\": \"clement11111\",\n" +
+            "\"permission\": \"active\"\n" +
+            "}],\n" +
+            "\"data\": {\n" +
+            "\"from\": \"clement11111\",\n" +
+            "\"to\": \"clement22222\",\n" +
+            "\"quantity\": \"0.0001 EOS\",\n" +
+            "\"memo\": \"jlsdjlsdjf\"\n" +
+            "}\n" +
+            "}]");
+    transaction.setBlockchain("EOS");
+    transaction.setExpired(10000000000L);
+
+    TPManager.getInstance().pushTransaction(MainActivity.this, transaction, new TPListener() {
+        @Override
+        public void onSuccess(String data) {
+        }
+
+        @Override
+        public void onError(String data) {
+        }
+
+        @Override
+        public void onCancel(String data) {
+        }
+});
+```
+
+#### <a name='Sign'></a>4.签名 (Sign)
+
+``` java
+    Signature signature = new Signature();
+    signature.setBlockchain("EOS");
+    signature.setDappName("Newdex");
+    signature.setDappIcon("https://newdex.io/static/logoicon.png");
+    signature.setActionId("web-99784c28-70f0-49ff-3654-f27b137b3502");
+    signature.setCallbackUrl("https://newdex.io/api/account/walletVerify");
+    signature.setExpired(1537157808L);
+    signature.setMemo("The first gobal decentralized exchange built on EOS");
+    signature.setMessage("hello");
+    signature.setBlockchain("EOS");
+    TPManager.getInstance().sign(MainActivity.this, getSignature(),new TPListener() {
+        @Override
+        public void onSuccess(String data) {
+        }
+
+        @Override
+        public void onError(String data) {
+        }
+
+        @Override
+        public void onCancel(String data) {
+        }
+});
+```
+
+## <a name='MiniWallet'></a>MiniWallet
+
+### <a name='Introduction'></a>简介 (Introduction)
+
+miniwallet，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅
+
+### <a name='auth'></a>auth
+
+- 调用TPManager.getInstance().auth 唤起钱包完成操作 
+
+- First  call TPManager.getInstance().auth() to auth
+
+### <a name='pushTransaction'></a>pushTransaction
+
+- 构建数据，将操作的action中的permission字段值替换成第一步调用auth传递的perm字段
+- 调用TPManager.getInstance().isPermLinkAction(this, transaction, new TPListener())检查action绑定状态
+- 如果第二步绑定成功，则直接调用TPManager.getInstance().pushTransaction()
+- 如果第二步绑定失败，则需要开发者将permission字段替换成active或者owner,以便拉起钱包执行操作
+
+- Set the permission in authorization to the value which used in auth method
+- Call TPManager.getInstance().isPermCheck to check actions bind status
+- If get success callback then just call TPManager.getInstance().pushTransaction to execute this action
+- If get fail callback, you should replace the permission to active or owner, so that it can pull up TokenPocket to do this action
+
+### <a name='miniwalletminiwalletapis'></a>miniwallet操作 (miniwallet apis)
+
+#### <a name='SDKInitsdk'></a>1.初始化SDK (Init sdk)
+
+``` java
 TPManager.initSDK(Context context);
-~~~
+``` 
 
-#### <a name='setBlockChain'></a>设置blockchain 信息 (Set blockchain info)
-~~~
-TPManager.getInstance().setBlockChain(Context context, NetTypeEnum netType, String nodeUrl);
-~~~
+#### <a name='blockchainSetblockchaininfo'></a>2.设置blockchain 信息 (Set blockchain info)
 
-#### <a name='setAppPluginNode'></a>设置插件信息 (Set plugin info)
-~~~
-TPManager.getInstance().setAppPluginNode(Context context, String pluginUrl);
-~~~
+``` java
+TPManager.getInstance().setBlockChain(this, NetTypeEnum.EOS_MAINNET, "http://openapi.eos.ren");
+```
 
-#### <a name='setSeed'></a>设置seed (Set seed to protect data)
-~~~
-TPManager.getInstance().setSeed(Context context, String seed)
-~~~
+#### <a name='Setplugininfo'></a>3.设置插件信息 (Set plugin info)
 
-#### <a name='modifySeed'></a>修改seed (Modify seed)
+``` java
+TPManager.getInstance().setAppPluginNode(this, "http://xxx.com");
+```
 
-~~~
-TPManager.getInstance().modifySeed(Context context, String oldSeed, String newSeed)；
-~~~
+#### <a name='seedSetseedtoprotectdata'></a>4.设置seed (Set seed to protect data)
 
-#### <a name='getAccounts'></a>获取已授权账号信息（get authed accounts
-~~~
-TPManager.getInstance().getAccounts(Context context)；
-~~~
+``` java
+TPManager.getInstance().setSeed(this, "xxx");
+注意这里xxx只是示例，请设置自己的seed  (The xxx is just for demo ,please set your seed)
+```
 
-#### <a name='isPermExisted'></a>检查权限是否存在（check permission bind to account）
-~~~
-TPManager.getInstance()isPermExisted(Context context, String account, String perm, final TPListener listener);
-~~~
+#### <a name='seedModifyseed'></a>5.修改seed (Modify seed)
 
-#### <a name='isPermLinkAction'></a>检查权限是否link到action（check action bind to permission)
-~~~
-TPManager.getInstance().isPermiLinkAction(Context context, String account, String perm, List<Permission.LinkAction> actions,
-                                  final TPListener listener);
-~~~
+``` java
+TPManager.getInstance().modifySeed(Context context, "xxx", "yyy")；
+注意这里xxx  yyy只是示例，请设置自己的seed (The xxx and yyy is just for demo,please set your  seed)
+```
 
-#### <a name='clearAuth'></a>清除本地授权（clearAuth）
-~~~
-TPManager.getInstance().clearAuth(Context context, String account);
-~~~
+#### <a name='Getauthedaccounts'></a>6.获取已授权账号信息 (Get authed accounts
+
+``` java
+List<String> accounts = TPManager.getInstance().getAccounts(Context context)；
+```
+
+#### <a name='Checkpermissionbindtoaccount'></a>7.检查权限是否存在 (Check permission bind to account)
+
+``` java
+TPManager.getInstance().isPermExisted(this, "accountName", "permName", new TPListener() {
+        @Override
+        public void onSuccess(String data) {
+        }
+
+        @Override
+        public void onError(String data) {
+        }
+
+        @Override
+        public void onCancel(String data) {
+
+        }
+});
+```
+
+#### <a name='linkactionCheckactionbindtopermission'></a>8.检查权限是否link到action (Check action bind to permission)
+
+``` java
+
+List<LinkActions> linkActions = new ArrayList();
+linkActions.add(new LinkAction("contract", "action"));
+TPManager.getInstance().isPermiLinkAction(this, "accountName", "permName", linkActions, new TPListener() {
+        @Override
+        public void onSuccess(String data) {
+        }
+
+        @Override
+        public void onError(String data) {
+        }
+
+        @Override
+        public void onCancel(String data) {
+
+        }
+});
+```
+
+#### <a name='Clearauthedaccount'></a>9.清除本地授权 (Clear authed account)
+
+``` java
+TPManager.getInstance().clearAuth(Context context, "accountName");
+```
 
