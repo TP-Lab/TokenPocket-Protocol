@@ -5,9 +5,9 @@
 DApp uses this SDK  to pull up the TokenPocket wallet and do some actions such as token transfer, login auth, pushTransaction etc.
 
 - 该SDK仅支持0.4.9以上版本的TP钱包。
-- 0.7.8以及以上的TP钱包版本支持miniwallet。
+- 0.7.8以及以上的TP钱包版本支持MiniWallet。
 - Only version 0.4.9 or higher support this SDK.
-- Only version 0.7.8 or higher support miniwallet apis.
+- Only version 0.7.8 or higher support MiniWallet apis.
 
 ## <a name='Catalog'></a>目录 (Catalog)
 
@@ -25,7 +25,7 @@ DApp uses this SDK  to pull up the TokenPocket wallet and do some actions such a
   * [简介 (Introduction)](#Introduction)
   * [auth](#auth)
   * [pushTransaction](#pushTransaction)
-  * [miniwallet操作 (miniwallet apis)](#miniwalletminiwalletapis)
+  * [MiniWallet操作 (MiniWallet apis)](#miniwalletminiwalletapis)
     * [1.初始化SDK (Init sdk)](#SDKInitsdk)
     * [2.设置blockchain 信息 (Set blockchain info)](#blockchainSetblockchaininfo)
     * [3.设置插件信息 (Set plugin info)](#Setplugininfo)
@@ -228,7 +228,7 @@ dependencies {
 
 ### <a name='Introduction'></a>简介 (Introduction)
 
-miniwallet，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅
+MiniWallet，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅
 
 ### <a name='auth'></a>auth
 
@@ -248,7 +248,7 @@ miniwallet，可以实现对于特定操作，第三方App不需要拉起钱包�
 - If get success callback then just call TPManager.getInstance().pushTransaction to execute this action
 - If get fail callback, you should replace the permission to active or owner, so that it can pull up TokenPocket to do this action
 
-### <a name='miniwalletminiwalletapis'></a>miniwallet操作 (miniwallet apis)
+### <a name='miniwalletminiwalletapis'></a>MiniWallet操作 (MiniWallet apis)
 
 #### <a name='SDKInitsdk'></a>1.初始化SDK (Init sdk)
 
