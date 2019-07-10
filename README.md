@@ -74,7 +74,7 @@ allprojects {
 
 ``` java
 dependencies {
-    implementation 'com.tokenpocket.lab:wallet-sdk:1.1.0'
+    implementation 'com.tokenpocket.lab:wallet-sdk:1.1.1'
 }
 ```
 
