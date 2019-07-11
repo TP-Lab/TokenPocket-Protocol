@@ -56,9 +56,9 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 
 ### <a name='AppCallfromapp'></a>独立App拉起 ( Call from app )
 
-第三方App可以拉起TokenPocket执行签名，转账等操作。TP sdk还支持MinWallet，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅，具体使用请参照：[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
+第三方App可以拉起TokenPocket执行签名，转账等操作。TP sdk还支持MiniWallet，可以实现对于特定操作，第三方App不需要拉起钱包，直接在应用内部完成，体验更为流畅，具体使用请参照：[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
 
-Third-party apps can execute signatures, transfers, and etc actions by pull up the TokenPocket. TP SDK also support minWallet that can execute specific actions without leaving the app, which provides a better user experience. Please check it for the details:[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
+Third-party apps can execute signatures, transfers, and etc actions by pull up the TokenPocket. TP SDK also support MiniWallet that can execute specific actions without leaving the app, which provides a better user experience. Please check it for the details:[https://github.com/TP-Lab/Mobile-SDK](https://github.com/TP-Lab/Mobile-SDK)
 
 
 ### <a name='DappurlCallTokenPockettoopenurlwithDappbrowser'></a>Dapp 浏览器打开url ( Call TokenPocket to open url with Dapp browser)
