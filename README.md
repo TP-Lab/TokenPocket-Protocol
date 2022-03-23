@@ -11,9 +11,9 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 <!-- vscode-markdown-toc -->
 * [使用场景 (How to use)](#Howtouse)
 	* [扫码拉起TokenPocket  (Scan qrcode call TokenPocket)](#TokenPocketScanqrcodecallTokenPocket)
-	* [页面拉起 ( Call from web page )](#Callfromwebpage)
-	* [独立App拉起 ( Call from app )](#AppCallfromapp)
-	* [Dapp 浏览器打开url ( Call TokenPocket to open url with Dapp browser)](#DappurlCallTokenPockettoopenurlwithDappbrowser)
+	* [移动浏览器唤起TP钱包进行授权/交易等 ( Call from web page )](#Callfromwebpage)
+	* [独立原生App拉起TP钱包进行授权/交易等 ( Call from app )](#AppCallfromapp)
+	* [移动浏览器唤起TP钱包的Dapp浏览器打开制定url ( Call TokenPocket to open url with Dapp browser)](#DappurlCallTokenPockettoopenurlwithDappbrowser)
 * [通用操作 (Common APIs)](#CommonAPIs)
 	* [1. Authorize](#Authorize)
 	* [2. 转账 (Token transfer)](#Tokentransfer)
