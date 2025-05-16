@@ -5,7 +5,7 @@
 This protocol can be used to call TokenPocket do some actions from page or app。
 
 ## More
-[https://help.tokenpocket.pro/developer-cn/mobile-wallet/deeplink]([https://github.com/TP-Lab/Mobile-SDK](https://help.tokenpocket.pro/developer-cn/mobile-wallet/deeplink))
+[https://help.tokenpocket.pro/developer-cn/mobile-wallet/deeplink](https://help.tokenpocket.pro/developer-cn/mobile-wallet/deeplink)
 
 ## <a name='Versionv1.0'></a>Version：v1.0
 
