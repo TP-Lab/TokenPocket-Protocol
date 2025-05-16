@@ -48,6 +48,7 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 ### <a name='TokenPocketScanqrcodecallTokenPocket'></a>扫码拉起TokenPocket  (Scan qrcode call TokenPocket)
 
 ### <a name='Callfromwebpage'></a>页面拉起 ( Call from web page )
+ 
 
 - Scheme：tpoutside://pull.activity?param={}
 
@@ -56,6 +57,8 @@ This protocol can be used to call TokenPocket do some actions from page or app�
 ``` html
 <a href='tpoutside://pull.activity?param={"Protocol":"ScanProtocol","version":"v1.0","blockchain":"eos","from":"aaaaaa123451","to":"cbzfb4a5s5zv","amount":"0.0001","contract":"eosio.token","symbol":"EOS","precision":"4","action":"transfer","memo":"test transfer from page"}'>Open TokenPocket to transfer eos</a><br/>
 ```
+
+More: https://help.tokenpocket.pro/developer-en/wallet/pull-up-wallet-with-deeplink
 
 ### <a name='AppCallfromapp'></a>独立App拉起 ( Call from app )
 
